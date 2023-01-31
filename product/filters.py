@@ -7,7 +7,7 @@ class ProductFiltering(django_filters.FilterSet):
     discount = django_filters.AllValuesMultipleFilter(widget=forms.CheckboxSelectMultiple(attrs={'class': 'checkbox'}),
                                                       label='Знижка',
                                                       field_name='discount')
-    price = django_filters.RangeFilter()
+    price_with_discount = django_filters.RangeFilter()
     type_product = django_filters.AllValuesMultipleFilter(widget=forms.CheckboxSelectMultiple(attrs={'class': 'checkbox'}),
                                                           label='Тип товару',
                                                           field_name='type_product__name',)
@@ -17,4 +17,4 @@ class ProductFiltering(django_filters.FilterSet):
 
     class Meta:
         model = Product
-        fields = ['discount', 'price', 'type_product', 'brand']
+        fields = ['discount', 'price_with_discount', 'type_product', 'brand']

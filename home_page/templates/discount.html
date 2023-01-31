@@ -9,7 +9,7 @@
                                    {% else %}{% static 'images/no_image.png' %}{% endif %}" width="201" height="235" alt="">
                          <div class="arrival-info">
                              <h4>{{ item.title }}</h4>
-                             <p>₴{{ item.get_sale }}</p>
+                             <p>₴{{ item.price_with_discount }}</p>
                              <span class="pric1"><del>Стара ціна ₴{{ item.price }}</del></span>
                              <span class="disc">[-{{ item.discount }}]</span>
                          </div>

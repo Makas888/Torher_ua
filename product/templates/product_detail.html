@@ -24,7 +24,13 @@
                     <div class="col-md-5 single-top-in simpleCart_shelfItem">
                         <div class="single-para ">
                             <h4>{{ product.title }} </h4>
-                            <h5 class="item_price">$ {{ product.price }}</h5>
+                            <div class="ofr">
+                                <p class="pric1"><del>Стара ціна ₴{{ product.price }}</del></p>
+                                <p></p>
+                                <p class="disc">[{{ product.discount }} Off]</p>
+                            </div>
+                            <h5 class="item_price">$ {{ product.price_with_discount }}</h5>
+
                             <p class="para">{{ product.desc }}</p>
                             <div class="prdt-info-grid">
                                 <ul>
@@ -51,7 +57,7 @@
                             <a href="{{ item.get_absolute_url }}">
                             <img src="{{ item.image1.url }}" class="img-responsive" alt="images/no_image.png"/>
                             <h4>{{ item.title }}</h4>
-                            <span>${{ item.price }}</span>
+                            <span>${{ item.price_with_discount }}</span>
                             </a>
                         </div>
                     {% endfor %}

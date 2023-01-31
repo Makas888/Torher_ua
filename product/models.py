@@ -102,6 +102,7 @@ class Product(models.Model):
     image3 = models.ImageField('Зображення', upload_to=get_file_name, default='images/no_image.png')
     is_active = models.BooleanField('Наявність товару', default=True)
 
+    price_with_discount = models.DecimalField('со скидкой', max_digits=8, decimal_places=2, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -111,14 +112,14 @@ class Product(models.Model):
         ordering = ('brand', 'is_active', 'price', 'stock', 'discount')
         index_together = (('id', 'slug'),)
 
-    def __str__(self):
-        return f'{self.title[:10]}: {self.brand}'
+    def save(self, *args, **kwargs):
+        """calculates the discounted price"""
+
+        self.price_with_discount = float(self.price * (100 - self.discount.percent) / 100)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("product:product_detail", args=[self.id, self.slug])
 
-    def get_sale(self):
-        """calculates the discounted price"""
-
-        price = int(self.price * (100 - self.discount.percent) / 100)
-        return price
+    def __str__(self):
+        return f'{self.title[:10]}: {self.brand}'
