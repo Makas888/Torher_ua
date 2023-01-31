@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="product">
+        <div class="container">
+            <div class="product-price1">
+                <div class="top-sing">
+                    <div class="col-md-7 single-top">
+                        <div class="flexslider">
+                            <ul class="slides">
+                                <li data-thumb="{% if product.image1 %}{{ product.image1.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}">
+                                    <div class="thumb-image"> <img src="{% if product.image1 %}{{ product.image1.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+                                </li>
+                                <li data-thumb="{% if product.image2 %}{{ product.image2.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}">
+                                    <div class="thumb-image"> <img src="{% if product.image2 %}{{ product.image2.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+                                </li>
+                                <li data-thumb="{% if product.image3 %}{{ product.image3.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}">
+                                    <div class="thumb-image"> <img src="{% if product.image3 %}{{ product.image3.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-5 single-top-in simpleCart_shelfItem">
+                        <div class="single-para ">
+                            <h4>{{ product.title }} </h4>
+                            <h5 class="item_price">$ {{ product.price }}</h5>
+                            <p class="para">{{ product.desc }}</p>
+                            <div class="prdt-info-grid">
+                                <ul>
+                                    <li>- Бренд : {{ product.brand }}</li>
+                                    <li>- Габаритні розміри (BхШхД): {{ product.size_height}}x{{ product.size_width }}x{{ product.size_length }}мм</li>
+                                    <li>- Колір : {{ product.color }}</li>
+                                    <li>- Матеріал : {{ product.material }}</li>
+                                </ul>
+                            </div>
+                            <form action="{% url "cart:cart_add" product.id %}" method="post" >
+                                {{ cart_product_form }}
+                                {% csrf_token %}
+                                <input type="submit" class="item_add items" value="Додати до кошика">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+            <div class="bottom-prdt">
+                <div class="btm-grid-sec">
+                    {% for item in products %}
+                        <div class="col-md-2 btm-grid">
+                            <a href="{{ item.get_absolute_url }}">
+                            <img src="{{ item.image1.url }}" class="img-responsive" alt="images/no_image.png"/>
+                            <h4>{{ item.title }}</h4>
+                            <span>${{ item.price }}</span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+<div class="footer">
+    <div class="container">
+        <div class="footer-grids">
+            <div class="col-md-3 about-us">
+                <h3>Про нас</h3>
+                <p>Це інтернет магазин освітлення</p>
+            </div>
+            <div class="col-md-3 ftr-grid">
+                <h3>Інформація</h3>
+                <ul class="nav-bottom">
+                    <li><a href="#">нові продукти</a></li>
+                    <li><a href="#">Місцезнаходження</a></li>
+                    <li><a href="#">Наші магазини</a></li>
+                    <li><a href="#">Найкращі продавці</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 ftr-grid">
+                <h3>Більше інформації</h3>
+                <ul class="nav-bottom">
+                    <li><a href="{% url 'password_recovery' %}">Змінити пароль</a></li>
+                    <li><a href="{% url 'login' %}">Логін</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="{% url 'contacts_page:contacts_page' %}">Контакти</a></li>
+                    <li><a href="#">Доставка</a></li>
+                    <li><a href="#">Членство</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 ftr-grid">
+                <h3>Категорії</h3>
+                <ul class="nav-bottom">
+                    {% for item in categories %}
+                        <li><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="copywrite">
+    <div class="container">
+        <div class="copy">
+            <p>© 2015 Lighting. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+        </div>
+        <div class="social">
+            <a href="#"><i class="facebook"></i></a>
+            <a href="#"><i class="twitter"></i></a>
+            <a href="#"><i class="dribble"></i></a>
+            <a href="#"><i class="google"></i></a>
+            <a href="#"><i class="youtube"></i></a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

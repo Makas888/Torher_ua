@@ -1,0 +1,71 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{% url 'home_page:home_page_view' %}">Додому</a></li>
+            <li class="active">Аккаунт</li>
+        </ol>
+        <div class="registration">
+            <div class="registration_left">
+                <h2>Hовий користувач? <span> створити аккаунт </span></h2>
+                <div class="registration_form">
+                    <!-- Form -->
+                    <form method="post">
+                        {% csrf_token %}
+                        <div>
+                            {{ user_registration_form.username }}
+                        </div>
+                        <div>
+                            {{ user_registration_form.last_name }}
+                        </div>
+                        <div>
+                            {{ user_registration_form.email }}
+                        </div>
+                        <div>
+                            {{ user_registration_form.phone }}
+                        </div>
+                            <div class="sky_form1">
+                                <ul>
+                                    <li><label class="radio left"><input type="radio" name="gender" checked="" value="m"><i></i>Чловіча</label></li>
+                                    <li><label class="radio"><input type="radio" name="gender" value="f"><i></i>Жіноча</label></li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                        <div>
+                            {{ user_registration_form.password1 }}
+                        </div>
+                        <div>
+                            {{ user_registration_form.password2 }}
+                        </div>
+                        <div>
+                            <input type="submit" value="створити аккаунт" id="register-submit">
+                        </div>
+                        <div class="sky-form">
+						    <label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>Я погоджуюсь на обробку персональних даних</label>
+					    </div>
+                    </form>
+                    <!-- /Form -->
+                </div>
+            </div>
+            <div class="registration_left">
+                <h2>існуючий користувач</h2>
+                <div class="registration_form">
+                    <!-- Form -->
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ login_form.as_p }}
+                        <div>
+                            <input type="submit" value="увійти">
+                        </div>
+                        <div class="forget">
+                            <a href="{% url 'password_reset' %}">Забули свій пароль</a>
+                        </div>
+                    </form>
+                    <!-- /Form -->
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+{% endblock %}

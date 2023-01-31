@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="login_sec">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="{% url 'home_page:home_page_view' %}">Додому</a></li>
+                <li class="active">Розсилка листів підписникам</li>
+            </ol>
+            <div class="text-center">
+                <h1>Заповніть форму</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="item_add items">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

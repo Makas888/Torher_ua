@@ -1,0 +1,28 @@
+{% load static %}
+<div class="items">
+    <div class="container">
+        <div class="items-sec ">
+            {% for item in products %}
+                <div class="col-md-3 feature-grid">
+                     <a href="{{ item.get_absolute_url }}">
+                         <img src="{% if item.image1 %}{{ item.image1.url }}
+                                   {% else %}{% static 'images/no_image.png' %}{% endif %}" width="201" height="235" alt="">
+                         <div class="arrival-info">
+                             <h4>{{ item.title }}</h4>
+                             <p>₴{{ item.get_sale }}</p>
+                             <span class="pric1"><del>Стара ціна ₴{{ item.price }}</del></span>
+                             <span class="disc">[-{{ item.discount }}]</span>
+                         </div>
+                         <div class="viw">
+                            <a href="{{ item.get_absolute_url }}"><span class="glyphicon glyphicon-eye-open"
+                                                                        aria-hidden="true"></span>Деталі товару</a>
+                         </div>
+                     </a>
+                </div>
+            {% empty %}
+                <p>Наразі товарів зі знижкою немає</p>
+            {% endfor %}
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

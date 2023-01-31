@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% block content %}
+    <div class="login_sec">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="{% url 'home_page:home_page_view' %}">Додому</a></li>
+                <li class="active">Login</li>
+            </ol>
+            <h2>Login</h2>
+            <div class="col-md-6 log">
+                <p>Ласкаво просимо, введіть, щоб продовжити.</p>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ login_form.as_p }}
+                    <input type="submit" value="Увійти">
+                    <a class="acount-btn" href="{% url 'registration' %}">Створити аккаунт</a>
+                </form>
+                <a href="{% url 'password_reset' %}">Забули пароль ?</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+{% endblock %}

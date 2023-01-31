@@ -1,0 +1,36 @@
+<li class="active"><a href="{% url 'home_page:home_page_view' %}">Додому</a></li>
+<li class="grid"><a href="{% url 'product:products_list' %}">Продукція</a>
+    <div class="mepanel">
+        <div class="row">
+            <div class="col1 me-one">
+                <h4>Магазин</h4>
+                <ul>
+                    {% for item in categories %}
+                        <li><a href="{{ item.get_absolute_url }}">{{ item.name }}({{ item.quantity_product }})</a></li>
+                    {% endfor %}
+                    <li><a href="{% url 'product:products_list' %}">Бренди</a></li>
+                    <li><a href="{% url 'login' %}">Авторизація</a></li>
+                    <li><a href="{% url 'cart:cart_detail' %}">Кошик</a></li>
+                </ul>
+            </div>
+            <div class="col1 me-one">
+                <h4>Тип освітлення</h4>
+                <ul>
+                    {% for item in subcategories %}
+                        <li><a href="{{ item.get_absolute_url }}">{{ item.name }}({{ item.product_set.count }})</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col1 me-one">
+                <h4>Популярні бренди</h4>
+                <ul>
+                    {% for item in brands %}
+                        <li><a href="{% url 'product:products_list' %}">{{ item.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</li>
+<li class="grid"><a href="{% url 'about_as:about_as' %}">Про нас</a></li>
+<li class="grid"><a href="{% url 'contacts_page:contacts_page' %}">Контакти</a></li>

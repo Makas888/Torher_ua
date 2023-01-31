@@ -1,0 +1,7 @@
+{% autoescape off %}
+    Привіт {{ user }},
+
+    Будь-ласка перейдіть за посиланням, щоб завершити реєстрацію:
+
+    <a href="{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}">Натисніть тут</a>
+{% endautoescape %}

@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <section id="reserves">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="{% url 'home_page:home_page_view' %}">Додому</a></li>
+                <li class="active">Замовлення</li>
+            </ol>
+            <div class="">
+                {% for item in orders_list %}
+                    <div class="container">
+                        <div class="col-md-1">
+                            <a href="{% url 'manager:processed' pk=item.pk %}">
+                                <button type="button" class="btn btn-primary">Опрацьовано</button>
+                            </a>
+                        </div>
+                        <div class="col-md-10"><h3>Замовлення №{{ item.id }} на суму:{{ item.get_total_cost }}грн від: {{ item.first_name }} {{ item.last_name }},  {{ item.email }},  {{ item.phone }}
+                            {{ item.updated }} {{ item.message }}</h3>
+                        </div>
+                        <div class="col-md-10"><h3>{{ item.city }}, {{ item.address }}, {{ item.department_number }}</h3></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

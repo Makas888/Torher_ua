@@ -1,0 +1,16 @@
+<div class="slider">
+    <div class="callbacks_container">
+        <ul class="rslides" id="slider">
+            {% for item in slides %}
+                <li>
+                    <div class="banner1" style="background-image: url({{ item.photo.url }}); background-size:cover; min-height:550px;">
+                        <div class="banner-info">
+                            <h3>{{ item.title }}</h3>
+                            <p>{{ item.desc }}</p>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

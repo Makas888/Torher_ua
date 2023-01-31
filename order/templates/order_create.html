@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{% url 'home_page:home_page_view' %}">Додому</a></li>
+            <li class="active">Замовлення</li>
+        </ol>
+        <div class="registration_left">
+            <h2>Заповніть анкету</h2>
+            <div class="contact-form">
+                <!-- Form -->
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div>
+                        <input type="submit" value="Створити замовлення">
+                    </div>
+                </form>
+                <!-- /Form -->
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

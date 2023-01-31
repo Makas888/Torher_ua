@@ -1,0 +1,10 @@
+<div class="subscribe">
+    <div class="container">
+        <h3>Розсилка новин</h3>
+        <form method="post" action="{% url 'news_letter_form:news_letter' %}">
+            {% csrf_token %}
+            {{ news_letter_form }}
+            <input type="submit" value="Підписатися">
+        </form>
+    </div>
+</div>
