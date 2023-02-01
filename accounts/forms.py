@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm, UserChangeForm, UserCreationForm
+
 from .models import CustomUser
-from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth import get_user_model
 from captcha.fields import CaptchaField
 
 
@@ -15,10 +16,13 @@ class UserLogin(forms.Form):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 
-        if username and password:
-            user = authenticate(username=username, password=password)
-            if not user or not user.check_password(password):
-                raise forms.ValidationError('Пароль або логін вказані не вірно')
+        try:
+            user = CustomUser.objects.get(username=username)
+        except CustomUser.DoesNotExist:
+            raise forms.ValidationError(f'користувач "{username}" не зареєстрований')
+
+        if not user.check_password(password):
+            raise forms.ValidationError('Не вірно введенно пароль')
 
         return super().clean()
 
