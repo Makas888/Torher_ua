@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     'sendgrid',
     'header',
     'footer',
+    'pytils',
+    'django_pagination_bootstrap',
+
 ]
 
 MIDDLEWARE = [
@@ -65,6 +68,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django_pagination_bootstrap.middleware.PaginationMiddleware',
 ]
 
 ROOT_URLCONF = 'Torcher_ua.urls'

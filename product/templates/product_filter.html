@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+    {% load pagination_tags %}
+    {% autopaginate product_filter 9 %}
 
     <div class="product-model">
         <div class="container">
@@ -11,7 +13,10 @@
             </ol>
                 <h2>Наші Товари</h2>
             <div class="col-md-9 product-model-sec">
-                {% for item in product_filter.qs %}
+                <div class="text-center">
+                    {% paginate %}
+                </div>
+                {% for item in product_filter %}
                     <div class="product-grid"><a href="{{ item.get_absolute_url }}">
                         <div class="more-product"><span>{{ item.desc| slice:":25" }}</span> </div>
                         <div class="product-img b-link-stripe b-animate-go  thickbox">

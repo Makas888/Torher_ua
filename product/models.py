@@ -7,8 +7,8 @@ from django.urls import reverse
 class SubCategory(models.Model):
     """product subcategory database model related to category many-to-many related to products one-to-many"""
 
-    name = models.CharField('Назва категорії', max_length=30, unique=True)
-    slug = models.SlugField(max_length=30, db_index=True, unique=True)
+    name = models.CharField('Назва категорії', max_length=256, unique=True)
+    slug = models.SlugField(max_length=256, db_index=True, unique=True)
 
     class Meta:
         verbose_name = 'Тип товару'
@@ -25,8 +25,8 @@ class SubCategory(models.Model):
 class Category(models.Model):
     """a product category database model associated with a many-to-many subcategory"""
 
-    name = models.CharField('Назва категорії', max_length=30, unique=True)
-    slug = models.SlugField(max_length=30, db_index=True, unique=True)
+    name = models.CharField('Назва категорії', max_length=256, unique=True)
+    slug = models.SlugField(max_length=256, db_index=True, unique=True)
     parent = models.ManyToManyField(SubCategory, verbose_name='Тип товару')
 
     class Meta:
@@ -83,8 +83,8 @@ class Product(models.Model):
         ext = file_name.strip().split()[-1]
         return os.path.join('images/product', f'{uuid4()}.{ext}')
 
-    title = models.CharField('Назва товару', max_length=25, db_index=True)
-    slug = models.SlugField(max_length=200, db_index=True, unique=True)
+    title = models.CharField('Назва товару', max_length=256, db_index=True)
+    slug = models.SlugField(max_length=256, db_index=True, unique=True)
     desc = models.TextField('Опис товару', max_length=2000, blank=True)
     price = models.DecimalField('Вартість', max_digits=8, decimal_places=2)
     brand = models.ForeignKey(Brands, verbose_name='Торгова марка', on_delete=models.CASCADE)

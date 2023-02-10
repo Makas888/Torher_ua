@@ -8,6 +8,7 @@ def products_list(request, slug=None):
     """display of goods depending on the applied filters"""
 
     product_filter = ProductFiltering(request.GET, queryset=Product.objects.filter(is_active=True))
+
     cart_product_form = CartAddProductForm()
     discount_product = Discount.objects.all()
     categories = Category.objects.all()
@@ -24,7 +25,7 @@ def products_list(request, slug=None):
                                                    'subcategories': subcategories,
                                                    'brands': brands,
                                                    'cart_product_form': cart_product_form,
-                                                   'product_filter': product_filter,
+                                                   'product_filter': product_filter.qs,
                                                    })
 
 
