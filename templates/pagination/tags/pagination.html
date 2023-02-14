@@ -83,7 +83,7 @@
                 {% endif %}
             {% endwith %}
 
-            {% if page_obj.number|add:2 < page_obj.paginator.num_pages %}
+            {% if page_obj.number|add:2 <= page_obj.paginator.num_pages %}
                 <li>
                     <a href="{{ path|set_page:page_obj.next_page_number }}" title="Наступна сторінка">&rsaquo;</a>
                 </li>

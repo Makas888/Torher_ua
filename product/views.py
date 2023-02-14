@@ -33,14 +33,13 @@ def products_list(request, slug=None):
         base_template = 'product_filter.html'
 
     return render(request, 'list-product.html', {'categories': categories[:10],
-                                                   'discount_product': discount_product,
-                                                   'subcategories': subcategories,
-                                                   'brands': brands,
-                                                   'cart_product_form': cart_product_form,
-                                                   # 'product_filter': product_filter.qs,
-                                                   'base_template': base_template,
-                                                   'page_obj': page_obj,
-                                                   })
+                                                 'discount_product': discount_product,
+                                                 'subcategories': subcategories,
+                                                 'brands': brands,
+                                                 'cart_product_form': cart_product_form,
+                                                 'base_template': base_template,
+                                                 'page_obj': page_obj,
+                                                 })
 
 
 def product_detail(request, id_, slug):
@@ -49,8 +48,13 @@ def product_detail(request, id_, slug):
     cart_product_form = CartAddProductForm()
     product = get_object_or_404(Product, id=id_, slug=slug, is_active=True)
     products = Product.objects.filter(type_product=product.type_product)
+
+    paginator = Paginator(products, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'product_detail.html', {'product': product,
-                                                   'products': products,
+                                                   'page_obj': page_obj,
                                                    'cart_product_form': cart_product_form,
                                                    })
 

@@ -57,7 +57,7 @@
                         {% include 'pagination/tags/pagination.html' %}
                     </div>
 
-                    {% for item in products %}
+                    {% for item in page_obj %}
                         <div class="col-md-2 btm-grid">
                             <a href="{{ item.get_absolute_url }}">
                             <img src="{{ item.image1.url }}" class="img-responsive" alt="images/no_image.png"/>
