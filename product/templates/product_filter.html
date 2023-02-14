@@ -1,60 +1,25 @@
 {% extends 'index.html' %}
+
+{% load django_htmx %}
 {% load static %}
 
 {% block content %}
-    {% load pagination_tags %}
-    {% autopaginate product_filter 9 %}
-
     <div class="product-model">
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="{% url 'home_page:home_page_view' %}">Додому</a></li>
                 <li class="active">Товари</li>
             </ol>
-                <h2>Наші Товари</h2>
-            <div class="col-md-9 product-model-sec">
-                <div class="text-center">
-                    {% paginate %}
-                </div>
-                {% for item in product_filter %}
-                    <div class="product-grid"><a href="{{ item.get_absolute_url }}">
-                        <div class="more-product"><span>{{ item.desc| slice:":25" }}</span> </div>
-                        <div class="product-img b-link-stripe b-animate-go  thickbox">
-                            <img src="{% if item.image1 %}{{ item.image1.url }}{% else %}
-                                {% static 'images/no_image.png' %}{% endif %}" width="178" height="208"
-                                 class="img-responsive" alt="">
-                            <div class="b-wrapper">
-                                <h4 class="b-animate b-from-left  b-delay03">
-                                <button><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>Деталі товару</button>
-                                </h4>
-                            </div>
-                        </div></a>
-                        <div class="product-info simpleCart_shelfItem">
-                            <div class="product-info-cust prt_name">
-                                <h4>{{ item.title }}</h4>
-                                <span class="item_price">₴{{ item.price_with_discount }}</span>
-                                <div class="ofr">
-                                    <p class="pric1"><del>Стара ціна ₴{{ item.price }}</del></p>
-                                    <p></p>
-                                    <p class="disc">[{{ item.discount }} Off]</p>
-                                </div>
-                                <form action="{% url "cart:cart_add" item.id %}" method="post" >
-                                    {{ cart_product_form }}
-                                    {% csrf_token %}
-                                    <input type="submit" class="item_add items" value="Додати">
-                                </form>
-                                <div class="clearfix"> </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+            <main id="main">
+                {% block main %}{% endblock %}
+            </main>
+
             <div class="rsidebar span_1_of_left">
                 <section  class="sky-form">
                      <div class="product_right">
                          <h4 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Категорії</h4>
                          {% for item in categories %}
-                             <div class="{% cycle 'tab1' 'tab2' 'tab3' 'tab4' 'tab5'  'tab6' 'tab7' 'tab8' 'tab9' 'tab10' %}">
+                             <div class="{% cycle 'tab1' 'tab2' 'tab3' 'tab4' 'tab5' 'tab6' 'tab7' 'tab8' 'tab9' 'tab10' %}">
                                  <ul class="place">
                                      <li class="sort">{{ item.name }} ({{ item.quantity_product }})</li>
                                      <li class="by"><img src="/static/images/do.png" alt=""></li>
@@ -62,20 +27,28 @@
                                  </ul>
                                  {% for cat in item.parent.all %}
                                      <div class="single-bottom">
-                                         <a href="{{ cat.get_absolute_url }}"><p>{{ cat.name }}({{ cat.product_set.count }})</p></a>
+                                         <a href="{{ cat.get_absolute_url }}">
+                                             <p>{{ cat.name }}({{ cat.product_set.count }})</p>
+                                         </a>
                                      </div>
                                  {% endfor %}
                             </div>
                          {% endfor %}
                      </div>
-                 </section>
-                <form method="get" action="{% url 'product:products_list' %}">
+                </section>
+                <form hx-get="{% url 'product:products_list' %}" hx-target="main">
                     <section  class="sky-form">
                         <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Знижка</h4>
                         <div class="row row1 scroll-pane">
                             <div class="col col-4">
                                 {% for item in discount_product %}
-                                    <label class="checkbox"><input type="checkbox" name="discount" value="{{ item.id }}"><i></i>{{ item.percent }}% ({{ item.product_set.count }})</label>
+                                    {% if item.product_set.count > 0 %}
+                                        <label class="checkbox"><input type="checkbox"
+                                                                       name="discount"
+                                                                       value="{{ item.id }}">
+                                            <i></i>{{ item.percent }}% ({{ item.product_set.count }})
+                                        </label>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
@@ -96,7 +69,13 @@
                         <div class="row row1 scroll-pane">
                             <div class="col col-4">
                                 {% for item in subcategories %}
-                                    <label class="checkbox"><input type="checkbox" name="type_product" value="{{ item.name }}"><i></i>{{ item.name }}({{ item.product_set.count }})</label>
+                                    {% if item.product_set.count > 0 %}
+                                        <label class="checkbox"><input type="checkbox"
+                                                                   name="type_product"
+                                                                   value="{{ item.name }}">
+                                            <i></i>{{ item.name }}({{ item.product_set.count }})
+                                        </label>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
@@ -106,7 +85,13 @@
                         <div class="row row1 scroll-pane">
                             <div class="col col-4">
                                 {% for item in brands %}
-                                    <label class="checkbox"><input type="checkbox" name="brand" value="{{ item.name  }}"><i></i>{{ item.name }}({{ item.product_set.count }})</label>
+                                    {% if item.product_set.count > 0 %}
+                                        <label class="checkbox"><input type="checkbox"
+                                                                       name="brand"
+                                                                       value="{{ item.name  }}">
+                                            <i></i>{{ item.name }}({{ item.product_set.count }})
+                                        </label>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         </div>

@@ -2,9 +2,6 @@
 {% load static %}
 
 {% block content %}
-    {% load pagination_tags %}
-    {% autopaginate products 5 %}
-
     <div class="product">
         <div class="container">
             <div class="product-price1">
@@ -55,9 +52,11 @@
             </div>
             <div class="bottom-prdt">
                 <div class="btm-grid-sec">
+
                     <div class="text-center">
-                        {% paginate %}
+                        {% include 'pagination/tags/pagination.html' %}
                     </div>
+
                     {% for item in products %}
                         <div class="col-md-2 btm-grid">
                             <a href="{{ item.get_absolute_url }}">

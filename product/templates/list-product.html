@@ -1,0 +1,47 @@
+{% extends base_template %}
+
+{% block main %}
+    {% load static %}
+    <h2>Наші Товари</h2>
+
+    <div class="col-md-9 product-model-sec ">
+
+        <div class="text-center">
+            {% include 'pagination/tags/pagination.html' %}
+        </div>
+
+        <main id=main">
+            {% for item in page_obj %}
+                <div class="product-grid"><a href="{{ item.get_absolute_url }}">
+                    <div class="product-img b-link-stripe b-animate-go  thickbox">
+                        <img src="{% if item.image1 %}{{ item.image1.url }}{% else %}
+                            {% static 'images/no_image.png' %}{% endif %}" width="178" height="208"
+                             class="img-responsive" alt="">
+                        <div class="b-wrapper">
+                            <h4 class="b-animate b-from-left  b-delay03">
+                            <button><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>Деталі товару</button>
+                            </h4>
+                        </div>
+                    </div></a>
+                    <div class="product-info simpleCart_shelfItem">
+                        <div class="product-info-cust prt_name">
+                            <h4>{{ item.title }}</h4>
+                            <span class="item_price">₴{{ item.price_with_discount }}</span>
+                            <div class="ofr">
+                                <p class="pric1"><del>Стара ціна ₴{{ item.price }}</del></p>
+                                <p></p>
+                                <p class="disc">[{{ item.discount }} Off]</p>
+                            </div>
+                            <form action="{% url "cart:cart_add" item.id %}" method="post" >
+                                {{ cart_product_form }}
+                                {% csrf_token %}
+                                <input type="submit" class="item_add items" value="Додати">
+                            </form>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </main>
+    </div>
+{% endblock %}

@@ -1,3 +1,5 @@
+from django.core.paginator import Paginator
+
 from .filters import ProductFiltering
 from django.shortcuts import render, get_object_or_404
 from cart.forms import CartAddProductForm
@@ -20,12 +22,24 @@ def products_list(request, slug=None):
     if slug and Category.objects.filter(slug=slug):
         category = get_object_or_404(Category, slug=slug)
         product_filter = ProductFiltering(queryset=Product.objects.filter(type_product__in=category.parent.all()))
-    return render(request, 'product_filter.html', {'categories': categories[:10],
+
+    paginator = Paginator(product_filter.qs, 3)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    if request.htmx:
+        base_template = '_partial.html'
+    else:
+        base_template = 'product_filter.html'
+
+    return render(request, 'list-product.html', {'categories': categories[:10],
                                                    'discount_product': discount_product,
                                                    'subcategories': subcategories,
                                                    'brands': brands,
                                                    'cart_product_form': cart_product_form,
-                                                   'product_filter': product_filter.qs,
+                                                   # 'product_filter': product_filter.qs,
+                                                   'base_template': base_template,
+                                                   'page_obj': page_obj,
                                                    })
 
 

@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'header',
     'footer',
     'pytils',
-    'django_pagination_bootstrap',
+    'django_htmx',
 
 ]
 
@@ -69,7 +69,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'django_pagination_bootstrap.middleware.PaginationMiddleware',
+    'django_htmx.middleware.HtmxMiddleware',
 ]
 
 ROOT_URLCONF = 'Torcher_ua.urls'
