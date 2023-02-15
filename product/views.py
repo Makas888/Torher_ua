@@ -47,14 +47,20 @@ def product_detail(request, id_, slug):
 
     cart_product_form = CartAddProductForm()
     product = get_object_or_404(Product, id=id_, slug=slug, is_active=True)
-    products = Product.objects.filter(type_product=product.type_product)
+    products = Product.objects.filter(type_product=product.type_product).order_by('title')
 
     paginator = Paginator(products, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'product_detail.html', {'product': product,
-                                                   'page_obj': page_obj,
-                                                   'cart_product_form': cart_product_form,
-                                                   })
+    if request.htmx:
+        base_template = '_partial.html'
+    else:
+        base_template = 'product_detail.html'
+
+    return render(request, 'list-product-from-category.html', {'product': product,
+                                                               'page_obj': page_obj,
+                                                               'cart_product_form': cart_product_form,
+                                                               'base_template': base_template,
+                                                               })
 
