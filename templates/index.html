@@ -48,19 +48,7 @@
             </ul>
         </div>
         <!---->
-
-        {% if cart|length > 0 %}
-            <div class="cart box_1">
-                <a href="{% url 'cart:cart_detail' %}">
-                    <div class="total">
-                    <a>₴ {{ cart.get_total_price }}грн ({{ cart|length }})</a></div>
-                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                </a>
-                <p><a href="{% url 'cart:cart_detail' %}">Кошик</a></p>
-                <div class="clearfix"> </div>
-            </div>
-            <div class="clearfix"> </div>
-        {% endif %}
+        {% include 'menu_cart.html' %}
         <!---->
     </div>
     <div class="clearfix"> </div>

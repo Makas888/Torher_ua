@@ -6,33 +6,9 @@
         <div class="check-sec">
             <div class="col-md-3 cart-total">
                 <a class="continue" href="{% url 'product:products_list' %}">Продовжити покупки</a>
-                <div class="price-details">
-                    <h3>Деталі рахунку</h3>
-                    <span>Всього</span>
-                    <span class="total1">{{ cart.get_total_price|floatformat:'2' }}грн</span>
-                    {% if cart.coupon %}
-                        <span>Купон</span>
-                        <span class="total1">{{ cart.coupon.code }}</span>
-                        <span>Знижка</span>
-                    <span class="total1">-{{ cart.coupon.discount }}%</span>
-                    {% else %}
-                        <span>Купон</span>
-                        <span class="total1">Відсутній</span>
-                        <span>Знижка</span>
-                        <span class="total1">0%</span>
-                    {% endif %}
-                    <span>Сума знижки</span>
-                    <span class="total1">{{ cart.get_discount|floatformat:'2' }}грн</span>
-                    <div class="clearfix"></div>
-                </div>
-                <ul class="total_price">
-                   <li class="last_price"> <h4>Всього</h4></li>
-                    {% if cart.coupon %}
-                        <li class="last_price"><span>{{ cart.get_total_price_after_discount|floatformat:'2' }}грн</span></li>
-                    {% else %}
-                        <li class="last_price"><span>{{ cart.get_total_price|floatformat:'2' }}грн</span></li>
-                    {% endif %}
-                </ul>
+
+                {% include 'order_detail.html' %}
+
                 <div class="clearfix"></div>
                 <div class="clearfix"></div>
                 <a class="order" href="{% url 'order:order' %}">Зробити замовлення</a>
@@ -44,42 +20,9 @@
                     </form>
 			    </div>
             </div>
-            <div class="col-md-9 cart-items">
-                <h1>Мій кошик({{ cart|length }})</h1>
-                {% for item in cart %}
-                    {% with product=item.product %}
-                        <div class="cart-header">
-                            <div><a href="{% url 'cart:cart_remove' product.id %}" class="close1"></a> </div>
-                            <div class="cart-sec simpleCart_shelfItem">
-                                <div class="cart-item cyc">
-                                    <img src="{% if product.image1 %}{{ product.image1.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" class="img-responsive" alt=""/>
-                                </div>
-                                <div class="cart-item-info">
-                                    <h3><a href="{% url 'product:product_detail' product.id product.slug %}">{{ product.title }}</a>
-                                        <span>Article No: {{ product.article }}</span>
-                                        <span>Вартість {{ product.price }}грн</span></h3>
-                                    <ul class="qty">
-                                        <li><p>Кількість : {{ item.quantity }}шт</p></li>
-                                        <li><p>Розмір : {{ product.size_length }}x{{ product.size_width }}x{{ product.size_height }} (мм)</p></li>
-                                    </ul>
-                                    <form method="post" action="{% url 'cart:cart_add' product.id %}">
-                                        {% csrf_token %}
-                                        <input type="number" class="item_quantity" name="quantity" value="{{ item.quantity }}">
-                                        <input type="hidden" name="update" value="{{ update_quantity_form.quantity.value }}">
-                                        <input type="submit" class="item_add items" value="Змінити кількість">
-                                    </form>
-                                    <div class="delivery">
-                                        <p>Перевізник: Нова-Пошта</p>
-                                        <span>Доставка 2-3 робочих дні</span>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    {% endwith %}
-                {% endfor %}
-            </div>
+
+            {% include 'cart_list_product.html' %}
+
             <div class="clearfix"> </div>
         </div>
     </div>

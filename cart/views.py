@@ -25,12 +25,17 @@ def cart_add(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     form = CartAddProductForm(request.POST)
+
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product,
                  quantity=cd['quantity'],
                  update_quantity=cd['update'])
-    return redirect('cart:cart_detail')
+
+    response = render(request, 'menu_cart.html')
+    response['HX-Trigger'] = 'update-menu-cart'
+
+    return response
 
 
 def cart_remove(request, product_id):
@@ -39,4 +44,9 @@ def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
+
     return redirect('cart:cart_detail')
+
+
+def hx_cart_total(request):
+    return render(request, 'order_detail.html')

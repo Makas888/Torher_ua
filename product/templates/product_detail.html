@@ -40,7 +40,7 @@
                                     <li>- Матеріал : {{ product.material }}</li>
                                 </ul>
                             </div>
-                            <form action="{% url "cart:cart_add" product.id %}" method="post" >
+                            <form hx-post="{% url "cart:cart_add" product.id %}" hx-target="menu-cart" hx-swap="outerHTML" >
                                 {{ cart_product_form }}
                                 {% csrf_token %}
                                 <input type="submit" class="item_add items" value="Додати до кошика">

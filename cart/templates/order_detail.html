@@ -1,0 +1,32 @@
+<div hx-get="{% url 'cart:hx_cart_total' %}"
+     hx-trigger="update-menu-cart from:body"
+     hx-swap="innerHTML">
+
+    <div class="price-details">
+        <h3>Деталі рахунку</h3>
+        <span>Всього</span>
+        <span class="total1">{{ cart.get_total_price|floatformat:'2' }}грн</span>
+        {% if cart.coupon %}
+            <span>Купон</span>
+            <span class="total1">{{ cart.coupon.code }}</span>
+            <span>Знижка</span>
+        <span class="total1">-{{ cart.coupon.discount }}%</span>
+        {% else %}
+            <span>Купон</span>
+            <span class="total1">Відсутній</span>
+            <span>Знижка</span>
+            <span class="total1">0%</span>
+        {% endif %}
+        <span>Сума знижки</span>
+        <span class="total1">{{ cart.get_discount|floatformat:'2' }}грн</span>
+        <div class="clearfix"></div>
+    </div>
+    <ul class="total_price">
+        <li class="last_price"> <h4>Всього</h4></li>
+        {% if cart.coupon %}
+            <li class="last_price"><span>{{ cart.get_total_price_after_discount|floatformat:'2' }}грн</span></li>
+        {% else %}
+            <li class="last_price"><span>{{ cart.get_total_price|floatformat:'2' }}грн</span></li>
+        {% endif %}
+    </ul>
+</div>
