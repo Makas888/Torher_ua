@@ -1,39 +1,41 @@
 {% load static %}
 <div class="col-md-9 cart-items">
     <h1>Мій кошик({{ cart|length }})</h1>
-    <detail-cart>
-        {% for item in cart %}
-            {% with product=item.product %}
-                <div class="cart-header">
-                    <div><a href="{% url 'cart:cart_remove' product.id %}" class="close1"></a> </div>
-                    <div class="cart-sec simpleCart_shelfItem">
-                        <div class="cart-item cyc">
-                            <img src="{% if product.image1 %}{{ product.image1.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" class="img-responsive" alt=""/>
-                        </div>
-                        <div class="cart-item-info">
-                            <h3><a href="{% url 'product:product_detail' product.id product.slug %}">{{ product.title }}</a>
-                                <span>Article No: {{ product.article }}</span>
-                                <span>Вартість {{ product.price }}грн</span></h3>
-                            <ul class="qty">
-                                <li><p>Кількість : {{ item.quantity }}шт</p></li>
-                                <li><p>Розмір : {{ product.size_length }}x{{ product.size_width }}x{{ product.size_height }} (мм)</p></li>
-                            </ul>
-                            <form hx-post="{% url 'cart:cart_add' product.id %}" hx-target="menu-cart" hx-swap="outerHTML">
-                                {% csrf_token %}
-                                <input type="number" class="item_quantity" name="quantity" value="{{ item.quantity }}">
-                                <input type="hidden" name="update" value="{{ update_quantity_form.quantity.value }}">
-                                <input type="submit" class="item_add items" value="Змінити кількість">
-                            </form>
-                            <div class="delivery">
-                                <p>Перевізник: Нова-Пошта</p>
-                                <span>Доставка 2-3 робочих дні</span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
+    {% for item in cart %}
+        {% with product=item.product %}
+            <div class="cart-header">
+                <div><a hx-post="{% url 'cart:cart_remove' product.id %}"
+                        hx-target="menu-cart"
+                        hx-swap="outerHTML"
+                        class="close1"></a>
                 </div>
-            {% endwith %}
-        {% endfor %}
-    </detail-cart>
+                <div class="cart-sec simpleCart_shelfItem">
+                    <div class="cart-item cyc">
+                        <img src="{% if product.image1 %}{{ product.image1.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" class="img-responsive" alt=""/>
+                    </div>
+                    <div class="cart-item-info">
+                        <h3><a href="{% url 'product:product_detail' product.id product.slug %}">{{ product.title }}</a>
+                            <span>Article No: {{ product.article }}</span>
+                            <span>Вартість {{ product.price }}грн</span></h3>
+{#                        <ul class="qty">#}
+{#                            <li><p>Кількість : {{ item.quantity }}шт</p></li>#}
+{#                            <li><p>Розмір : {{ product.size_length }}x{{ product.size_width }}x{{ product.size_height }} (мм)</p></li>#}
+{#                        </ul>#}
+                        <form hx-post="{% url 'cart:cart_add' product.id %}" hx-target="menu-cart" hx-swap="outerHTML">
+                            {% csrf_token %}
+                            <input type="number" class="item_quantity" name="quantity" value="{{ item.quantity }}" min="1" max="999">
+                            <input type="hidden" name="update" value="{{ update_quantity_form.quantity.value }}">
+                            <input type="submit" class="item_add items" value="Змінити кількість">
+                        </form>
+                        <div class="delivery">
+                            <p>Перевізник: Нова-Пошта</p>
+                            <span>Доставка 2-3 робочих дні</span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        {% endwith %}
+    {% endfor %}
 </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from cart.cart import Cart
 from product.models import Product
 from django.views.decorators.http import require_POST
@@ -12,10 +12,10 @@ def cart_detail(request):
     cart = Cart(request)
     update_quantity_form = CartAddProductForm(request.POST)
     coupons_activated_form = CouponActivatedForm()
-    return render(request, 'cart_detail.html', {'cart': cart,
-                                                'coupons_activated_form': coupons_activated_form,
-                                                'update_quantity_form': update_quantity_form,
-                                                })
+    return render(request, 'cart_base.html', {'cart': cart,
+                                              'coupons_activated_form': coupons_activated_form,
+                                              'update_quantity_form': update_quantity_form,
+                                              })
 
 
 @require_POST
@@ -45,8 +45,14 @@ def cart_remove(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
 
-    return redirect('cart:cart_detail')
+    response = render(request, 'menu_cart.html')
+    response['HX-Trigger'] = 'update-detail-cart'
+    return response
 
 
 def hx_cart_total(request):
     return render(request, 'order_detail.html')
+
+
+def hx_cart_list_product(request):
+    return render(request, 'cart_detail.html')
