@@ -1,6 +1,9 @@
 from django.db import models
 import os
 from uuid import uuid4
+
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 from django.urls import reverse
 
 
@@ -123,3 +126,15 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.title[:10]}: {self.brand}'
+
+
+@receiver(pre_delete, sender=Product)
+def images_product_delete(instance, **kwargs):
+    """Deletes files in the "media" folder after deleting the Product object"""
+
+    if instance.image1:
+        instance.image1.delete(False)
+    if instance.image2:
+        instance.image2.delete(False)
+    if instance.image3:
+        instance.image3.delete(False)

@@ -2,6 +2,9 @@ from django.db import models
 from uuid import uuid4
 import os
 
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+
 
 class HeroSection(models.Model):
     """slides with a description on the start page"""
@@ -28,7 +31,7 @@ class SeasonSale(models.Model):
 
     def get_file_name(self, file_name: str):
         ext = file_name.strip().split()[-1]
-        return os.path.join('images/slides', f'{uuid4()}.{ext}')
+        return os.path.join('images/sales', f'{uuid4()}.{ext}')
 
     information = models.CharField('Загальна інформація', max_length=50)
     max_discount = models.PositiveSmallIntegerField('Максимальна знижка')
@@ -62,3 +65,19 @@ class SeasonSaleVisible(models.Model):
 
     def __str__(self):
         return 'Активне' if self.is_visible else 'Неактивне'
+
+
+@receiver(pre_delete, sender=SeasonSale)
+def image_SeasonSale_delete(instance, **kwargs):
+    """Deletes files in the "media" folder after deleting the SeasonSale object"""
+
+    if instance.image:
+        instance.image.delete(False)
+
+
+@receiver(pre_delete, sender=HeroSection)
+def photo_HeroSection_delete(instance, **kwargs):
+    """Deletes files in the "media" folder after deleting the HeroSection object"""
+
+    if instance.photo:
+        instance.photo.delete(False)
