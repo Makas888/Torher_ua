@@ -274,6 +274,7 @@ display:inline-block;
 	padding:4em 0;
 }
 .feature-grid img {
+	height: 200px;
     width: 100%;
     padding: 0em 2em 1em 2em;
 }
@@ -289,6 +290,7 @@ display:inline-block;
     margin-top: 1em;
 }
 .arrival-info h4 {
+	min-height: 75px;
     color: #caccce;
     font-size: 0.95em;
     font-family: 'Dosis-Bold';
