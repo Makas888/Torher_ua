@@ -1,5 +1,8 @@
 <!-- check out -->
-<div class="container">
+<div hx-get="{% url 'cart:hx_cart_list_product' %}"
+     hx-trigger="update-detail-cart from:body"
+     hx-swap="innerHTML"
+     class="container">
     <div class="check-sec">
         <div class="col-md-3 cart-total">
             <a class="continue" href="{% url 'product:products_list' %}">Продовжити покупки</a>
