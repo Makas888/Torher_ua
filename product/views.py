@@ -23,7 +23,7 @@ def products_list(request, slug=None):
         category = get_object_or_404(Category, slug=slug)
         product_filter = ProductFiltering(queryset=Product.objects.filter(type_product__in=category.parent.all()))
 
-    paginator = Paginator(product_filter.qs, 3)
+    paginator = Paginator(product_filter.qs, 9)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
