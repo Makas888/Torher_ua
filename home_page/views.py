@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from product.models import Brands, Product, Category, SubCategory
-from .models import HeroSection, SeasonSaleVisible
+from .models import HeroSection, NewsVisible
 import random
 
 
@@ -13,11 +13,15 @@ def home_page_view(request):
     subcategories = SubCategory.objects.all()
     products = Product.objects.exclude(discount__percent=0)
     products = random.sample(list(products), len(products[:8]))
-    sales = SeasonSaleVisible.objects.get(is_visible=True)
+    try:
+        news = NewsVisible.objects.get(is_visible=True)
+    except:
+        news = None
+
     return render(request, 'base.html', {'brands': brands,
                                          'categories': categories,
                                          'slides': slides,
                                          'subcategories': subcategories,
                                          'products': products,
-                                         'sales': sales,
+                                         'news': news,
                                          })

@@ -1,18 +1,18 @@
 {% load static %}
 <div class="offers">
     <div class="container">
-        <h3>Сезонний Pозпродаж</h3>
+        <h3>Важливі Новини</h3>
         <div class="offer-grids">
              <div class="col-md-6 grid-left">
                  <a href="{% url 'product:products_list' %}"><div class="offer-grid1">
                      <div class="ofr-pic">
-                         <img src="{% if sales.left_block.image %}{{ sales.left_block.image.url }}
+                         <img src="{% if news.left_block.image %}{{ news.left_block.image.url }}
                                    {% else %}{% static 'images/no_image.png' %}{% endif %}"
                               class="img-responsive" alt=""/>
                      </div>
                      <div class="ofr-pic-info">
-                         <h4>{{ sales.left_block.information }}</h4>
-                         <span>Знижки до -{{ sales.left_block.max_discount }}%</span>
+                         <h4>{{ news.left_block.description }}</h4>
+                         <span>{{ news.left_block.title }}</span>
                          <p>До магазину</p>
                      </div>
                      <div class="clearfix"></div>
@@ -21,12 +21,12 @@
              <div class="col-md-6 grid-right">
                  <a href="{% url 'product:products_list' %}"><div class="offer-grid2">
                      <div class="ofr-pic-info2">
-                         <span>Знижки до -{{ sales.right_block.max_discount }}%</span>
-                         <h5>{{ sales.right_block.information }}</h5>
+                         <span>{{ news.right_block.title }}</span>
+                         <h5>{{ news.right_block.description }}</h5>
                          <p>До магазину</p>
                      </div>
                      <div class="ofr-pic2">
-                         <img src="{% if sales.right_block.image %}{{ sales.right_block.image.url }}
+                         <img src="{% if news.right_block.image %}{{ news.right_block.image.url }}
                                    {% else %}{% static 'images/no_image.png' %}{% endif %}"
                               class="img-responsive" alt=""/>
                      </div>

@@ -26,50 +26,50 @@ class HeroSection(models.Model):
         return f'{self.title}'
 
 
-class SeasonSale(models.Model):
+class News(models.Model):
     """sales information on the start page"""
 
     def get_file_name(self, file_name: str):
         ext = file_name.strip().split()[-1]
-        return os.path.join('images/sales', f'{uuid4()}.{ext}')
+        return os.path.join('images/block_news', f'{uuid4()}.{ext}')
 
-    information = models.CharField('Загальна інформація', max_length=50)
-    max_discount = models.PositiveSmallIntegerField('Максимальна знижка')
+    title = models.CharField('Заголовок', max_length=25)
+    description = models.CharField('Опис', max_length=500)
     image = models.ImageField('Зображення', upload_to=get_file_name)
 
     class Meta:
-        verbose_name = 'Pозпродаж'
-        verbose_name_plural = 'Pозпродаж'
+        verbose_name = 'Новина'
+        verbose_name_plural = 'Новини'
 
     def __str__(self):
-        return f'{self.information} - {self.max_discount}'
+        return f'{self.title} - {self.description[:25]}'
 
 
-class SeasonSaleVisible(models.Model):
+class NewsVisible(models.Model):
     """sales position on the start page"""
 
-    left_block = models.ForeignKey(SeasonSale,
+    left_block = models.ForeignKey(News,
                                    verbose_name='Лівий блок',
-                                   on_delete=models.DO_NOTHING,
+                                   on_delete=models.CASCADE,
                                    related_name='left_block')
-    right_block = models.ForeignKey(SeasonSale,
+    right_block = models.ForeignKey(News,
                                     verbose_name='Правий блок',
-                                    on_delete=models.DO_NOTHING,
+                                    on_delete=models.CASCADE,
                                     related_name='right_block')
     is_visible = models.BooleanField('Відобразити', unique=True)
 
     class Meta:
-        verbose_name = 'Відображення розпродажу'
-        verbose_name_plural = 'Відображення розпродажу'
+        verbose_name = 'Відображення новин'
+        verbose_name_plural = 'Відображення новин'
         ordering = ('-is_visible', )
 
     def __str__(self):
         return 'Активне' if self.is_visible else 'Неактивне'
 
 
-@receiver(pre_delete, sender=SeasonSale)
-def image_SeasonSale_delete(instance, **kwargs):
-    """Deletes files in the "media" folder after deleting the SeasonSale object"""
+@receiver(pre_delete, sender=News)
+def image_News_delete(instance, **kwargs):
+    """Deletes files in the "media" folder after deleting the News object"""
 
     if instance.image:
         instance.image.delete(False)
