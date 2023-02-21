@@ -2598,3 +2598,31 @@ input.item_add.items {
     background: #ed645c;
     color: #fff;
 }
+
+table {
+  	border-collapse: collapse;
+	color: #686461;
+}
+caption {
+	padding: 10px;
+	color: white;
+	background: #ed645c;
+	font-size: 18px;
+	text-align: center;
+	font-weight: bold;
+}
+th {
+  	border-bottom: 5px solid #8f8e8e;
+  	padding: 10px;
+  	text-align: left;
+
+}
+td {
+  	padding: 10px;
+}
+tr:nth-child(odd) {
+	background: white;
+}
+tr:nth-child(even) {
+  	background: #e2dfdf;
+}
