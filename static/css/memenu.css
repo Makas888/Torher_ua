@@ -1,8 +1,8 @@
 .memenu
-{margin:0;padding:0;width:160%;list-style:none;display:inline-block;position:relative;font-family:Calibri,Arial;font-size:15px}
+{margin:0;padding:0;width:185%;list-style:none;display:inline-block;position:relative;font-family:Calibri,Arial;font-size:15px}
 .memenu li{text-align:left;}
 ul.memenu.skyblue {text-align: center;}
-.memenu>li>a{ font-family: 'Dosis-Regular';float:left;padding:38px 30px;color:#caccce;font-weight:600;text-decoration:none;text-transform:uppercase;border-right: 1px solid #eee;transition:color .4s ease-in-out;-moz-transition:color .4s ease-in-out;-webkit-transition:color .4s ease-in-out;-o-transition:color .4s ease-in-out}
+.memenu>li>a{ font-family: 'Dosis-Regular';float:left;padding:38px 20px;color:#caccce;font-weight:600;text-decoration:none;text-transform:uppercase;border-right: 1px solid #eee;transition:color .4s ease-in-out;-moz-transition:color .4s ease-in-out;-webkit-transition:color .4s ease-in-out;-o-transition:color .4s ease-in-out}
 .memenu>li>.mepanel {
 	position: absolute;
 	display: none;
